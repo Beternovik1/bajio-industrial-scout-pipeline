@@ -1,0 +1,15 @@
+# Python System
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Data & Databases 
+*.db
+*.sqlite3
+data/
+logs/
+
+# IDE settings
+.vscode/
+.idea/
