@@ -25,6 +25,7 @@ class Job(Base):
     date_posted = Column(String, nullable=True)
     date_scraped = Column(DateTime, default=datetime.utcnow)
 
+    status = Column(String(20), default='NEW')
     def __repr__(self):
         return f"<Job(title='{self.title},' company='{self.company}')>"
     
