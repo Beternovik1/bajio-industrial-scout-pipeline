@@ -4,9 +4,9 @@ from scraper import scout_jobs
 from models import db_connect, create_tables, Job
 
 # Extract
-def extract_data(search_term):
-    print(f"(EXTRACT) Starting scraper for '{search_term}'...")
-    df = scout_jobs(search_term=search_term, results_limit=10)
+def extract_data(search_term, location="Irapuato, Guanajuato"):
+    print(f"(EXTRACT) Starting scraper for '{search_term} in {location}'...")
+    df = scout_jobs(search_term=search_term, location=location, results_limit=10)
     if df.empty:
         print("No data found.")
     return df
@@ -82,7 +82,7 @@ def run_pipeline():
     # Pipeline flow
     try:
         # Extract
-        raw_df = extract_data("Ingeniero Industrial")
+        raw_df = extract_data("Ingeniero Industrial", location="Irapuato, Guanajuato")
 
         if not raw_df.empty:
             # Transform
