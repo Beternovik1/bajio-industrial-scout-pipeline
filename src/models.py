@@ -1,6 +1,6 @@
-from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, Boolean, Text
-from sqlalchemy.orm import declarative_base, sessionmaker
-from datetime import datetime
+from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, Text
+from sqlalchemy.orm import declarative_base
+from sqlalchemy.sql import func
 import os
 
 # 1. Fundation
@@ -10,6 +10,7 @@ Base = declarative_base()
 class Job(Base):
     __tablename__ = 'jobs'
 
+    # Scraped data
     id = Column(Integer, primary_key=True)
     site = Column(String(50)) # indeed, glassdoor
     job_url = Column(String, unique=True, nullable=False) # Unique prevents duplicates
@@ -17,15 +18,21 @@ class Job(Base):
     company = Column(String, nullable=False)
     location = Column(String, nullable=False)
 
+    # salary info
     salary_min = Column(Float, nullable=True)
     salary_max = Column(Float, nullable=True)
     currency = Column(String(10), nullable=True)
 
     description = Column(Text, nullable=True)
     date_posted = Column(String, nullable=True)
-    date_scraped = Column(DateTime, default=datetime.utcnow)
 
+    # tracker fields
+    date_scraped = Column(DateTime, default=func.now())
+    # found date = date_scraped
     status = Column(String(20), default='NEW')
+    applied_date = Column(DateTime, nullable=True)
+    last_updated = Column(DateTime, default=func.now(), onupdate=func.now())
+    notes = Column(Text, nullable=True)
     def __repr__(self):
         return f"<Job(title='{self.title},' company='{self.company}')>"
     
