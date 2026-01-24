@@ -33,13 +33,21 @@ def transform_data(df):
         if pd.isna(salary_max): salary_max = None
         if pd.isna(currency): currency = None
 
+        company_name = row.get('company')
+        if pd.isna(company_name):
+            company_name = "Empresa confidencial"
+
+        location_name = row.get('location')
+        if pd.isna(location_name):
+            location_name = "Ubicacion desconocida"
+
         # Creating the object
         job_obj = Job(
             site = row.get('site', 'unknown'),
             job_url = row['job_url'],
             title = row['title'].upper(),
-            company=row['company'],
-            location = row['location'],
+            company = company_name,
+            location = location_name,
             date_posted = row.get('date_posted'),
             description = row.get('description'),
             salary_min = salary_min,
