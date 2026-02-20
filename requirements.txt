@@ -1,0 +1,5 @@
+pandas
+python-jobspy
+SQLAlchemy
+fpdf2
+pytz
