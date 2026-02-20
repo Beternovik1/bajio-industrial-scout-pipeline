@@ -3,7 +3,7 @@ name: Job Scout Diario (Docker)
 on:
   schedule:
     # It's going to start the scout everyday at 12:00 UTC (6:00AM CST in Irapuato)
-    - cron: '0 12 * * *'
+    - cron: '17 12 * * *'
   workflow_dispatch: # Manual button for testings
 
 jobs:
