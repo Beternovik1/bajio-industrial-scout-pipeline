@@ -133,7 +133,7 @@ def generate_pdf_report():
         os.makedirs('reports')
     
     current_time = datetime.now(pytz.timezone(tz_name))
-    filename = f"reports/Job_scout_{current_time.strftime('%Y-%m-%d_%H-%M')}.pdf"
+    filename = f"reports/jobs{current_time.strftime('%Y-%m-%d_%H-%M')}.pdf"
 
     pdf.output(filename)
     print(f"pdf saved: {filename} !!")
