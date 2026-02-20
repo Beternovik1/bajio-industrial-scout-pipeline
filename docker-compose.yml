@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  scout_pipeline:
+    build: .
+    # local passwords
+    env_file:
+      - .env
+    volumes:
+      - ./reports:/app/reports

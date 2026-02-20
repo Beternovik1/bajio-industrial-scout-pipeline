@@ -36,7 +36,7 @@ def export_jobs():
             print("No new or applied jobs to export")
             return
         today = datetime.now().strftime("%Y-%m-%d")
-        filename = f"../{reports_folder}/job_report_{today}.csv" 
+        filename = f"{reports_folder}/job_report_{today}.csv" 
         # saving interesting jobs into a csv
         df.to_csv(filename, index=False, encoding='utf-8-sig')
         # utf-8-sig fixes accents in excel

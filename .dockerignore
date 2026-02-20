@@ -1,0 +1,8 @@
+.venv/
+venv
+__pychache__/
+*.pyc
+*.pyo
+reports/
+*.db
+.env
