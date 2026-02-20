@@ -3,25 +3,26 @@ name: Job Scout Diario (Docker)
 on:
   schedule:
     # It's going to start the scout everyday at 12:00 UTC (6:00AM CST in Irapuato)
-    workflow_dispatch: # Manual button for testings
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Manual button for testings
 
-  jobs:
-    run-docker-pipeline:
-      runs-on: ubuntu-latest
+jobs:
+  run-docker-pipeline:
+    runs-on: ubuntu-latest
 
-      steps:
-      - name: Downloading the code
-        uses: actions/checkout@v4
+    steps:
+    - name: Downloading the code
+      uses: actions/checkout@v4
 
-      - name: Building docker image
-        run: docker build -t bajio-scout
+    - name: Building docker image
+      run: docker build -t bajio-scout .
 
-      - name: Executing the container
-        env:
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        run: |
-          docker run --rm \
-          -e EMAIL_USER=$EMAIL_USER \
-          -e EMAIL_PASS=$EMAIL_PASS \
-          bajio-scout
+    - name: Executing the container
+      env:
+        EMAIL_USER: ${{ secrets.EMAIL_USER }}
+        EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+      run: |
+        docker run --rm \
+        -e EMAIL_USER=$EMAIL_USER \
+        -e EMAIL_PASS=$EMAIL_PASS \
+        bajio-scout
