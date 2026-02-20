@@ -4,9 +4,9 @@ from scraper import scout_jobs
 from models import db_connect, create_tables, Job
 
 # Extract
-def extract_data(search_term, location="Irapuato, Guanajuato"):
-    print(f"(EXTRACT) Starting scraper for '{search_term} in {location}'...")
-    df = scout_jobs(search_term=search_term, location=location, results_limit=10)
+def extract_data(search_term, location="Irapuato, Guanajuato", include_linkedin=False):
+    print(f"(EXTRACT) Starting scraper for '{search_term}' in {location}'...")
+    df = scout_jobs(search_term=search_term, location=location, results_limit=10, include_linkedin=include_linkedin)
     if df.empty:
         print("No data found.")
     return df
@@ -80,7 +80,7 @@ def load_data(session, job_objects):
         session.rollback()
         print(f"Database Error: {err}")
 
-def run_pipeline():
+def run_pipeline(include_linkedin=False):
     # Setup
     engine = db_connect()
     create_tables(engine)
@@ -90,7 +90,7 @@ def run_pipeline():
     # Pipeline flow
     try:
         # Extract
-        raw_df = extract_data("Ingeniero Industrial", location="Irapuato, Guanajuato")
+        raw_df = extract_data("Ingeniero Industrial", location="Irapuato, Guanajuato", include_linkedin=include_linkedin)
 
         if not raw_df.empty:
             # Transform

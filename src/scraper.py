@@ -3,6 +3,8 @@ import pandas as pd
 from jobspy import scrape_jobs
 from datetime import datetime
 import os
+import time
+import random
 
 # 1. Setup logging
 # this leps debugging when and why something fails
@@ -12,14 +14,29 @@ logging.basicConfig(
     handlers=[logging.StreamHandler()]
 )
 
-def scout_jobs(search_term= 'Ingeniero Industrial', location='Irapuato, Guanajuato', results_limit=20):
+def scout_jobs(search_term= 'Ingeniero Industrial', location='Irapuato, Guanajuato', results_limit=20, include_linkedin=False):
     logging.info(f"Starting scout for: '{search_term}' in '{location}'")
+
+    # sites = ['indeed', 'glassdoor']
+    sites = ['indeed']
+
+    if include_linkedin:
+        sites.append('linkedin')
+    # if include_linkedin:
+    #     sites.append('linkedin')
+    #     logging.warning("LinkedIn included: being extra cautious with delays.")
+
     try:
+        # humanization: adding delay to requests pre-scraping
+        delay = random.uniform(5, 15)
+        logging.info(f"Sleeping for {delay:.2f} seconds before request...")
+        time.sleep(delay)
+
         # 2. Scraper
         # We start with Indeed and Glassdor as linkedin is stricter
         jobs = scrape_jobs(
             # site_name=['indeed', 'glassdoor', 'linkedin'],
-            site_name=['indeed', 'glassdoor'],
+            site_name=sites,
             search_term=search_term,
             location=location,
             distance=40,
@@ -28,6 +45,9 @@ def scout_jobs(search_term= 'Ingeniero Industrial', location='Irapuato, Guanajua
             hours_old=72, # Last 3 days
             verbose=0
         )
+
+        # delay post-scraping
+        time.sleep(random.uniform(2,5))
 
         logging.info(f'Extraction completed. Found {len(jobs)} raw jobs')
         return jobs
