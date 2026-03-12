@@ -10,7 +10,7 @@ def extract_data(search_term, location="Irapuato, Guanajuato", include_linkedin=
     df = scout_jobs(
         search_term=search_term,
         location=location,
-        results_limit=2,
+        results_limit=10,
         include_linkedin=include_linkedin
     )
 
