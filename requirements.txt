@@ -1,4 +1,5 @@
 annotated-types==0.7.0
+asarPy==1.0.1
 beautifulsoup4==4.14.3
 certifi==2026.1.4
 charset-normalizer==3.4.4
@@ -11,6 +12,7 @@ markdownify==0.13.1
 numpy==1.26.3
 pandas==2.3.3
 pillow==12.1.1
+psycopg2-binary==2.9.11
 pydantic==2.12.5
 pydantic_core==2.41.5
 python-dateutil==2.9.0.post0
