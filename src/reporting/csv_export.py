@@ -1,5 +1,5 @@
 import pandas as pd
-from models import db_connect
+from database.models import db_connect
 import os
 from datetime import datetime
 from sqlalchemy import text
@@ -8,22 +8,16 @@ def export_jobs():
     engine = db_connect()
 
     with engine.connect() as conn:
-            # I only want 'new' or 'applied' jobs, not rejected ones
         query = """
-            SELECT id,
-                    title,
-                    company,
-                    location,
-                    salary_min, 
-                    salary_max,
-                    site,
-                    job_url,
-                    date_posted,
-                    date_scraped
-                FROM jobs
-                WHERE status IN ('NEW', 'APPLIED')
-                ORDER BY date_scraped DESC
-        """
+                    SELECT id, title, company, 
+                        raw_location, state, job_type,
+                        salary_min, salary_max, site, job_url,
+                        date_posted, 
+                        date_scraped AT TIME ZONE 'UTC' AT TIME ZONE 'America/Mexico_City' AS local_date_scraped
+                    FROM jobs
+                    WHERE status IN ('NEW', 'APPLIED')
+                    ORDER BY local_date_scraped DESC
+                """
 
         df = pd.read_sql(text(query), conn)
 
