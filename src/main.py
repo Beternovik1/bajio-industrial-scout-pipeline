@@ -10,8 +10,11 @@ def main():
     is_monday = (today == 0)
 
     print("Starting pipeline...")
-    run_pipeline(include_linkedin=is_monday)
-
+    run_pipeline(
+            include_linkedin=is_monday, 
+            search_terms=["Desarrollador Backend", "Python Backend", "Java Backend"],
+            location="México"
+        )
     print("Exporting jobs to csv...")
     export_jobs()
 
