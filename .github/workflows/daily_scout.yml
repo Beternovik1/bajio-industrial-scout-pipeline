@@ -24,8 +24,8 @@ jobs:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: |
         docker run --rm \
-        -e EMAIL_USER=$EMAIL_USER \
-        -e EMAIL_PASS=$EMAIL_PASS \
-        -e DATABASE_URL=$DATABASE_URL \
-        -e WORKER_NAME="GitHub_Actions_Hermano" \        
+        -e EMAIL_USER="${EMAIL_USER}" \
+        -e EMAIL_PASS="${EMAIL_PASS}" \
+        -e DATABASE_URL="${DATABASE_URL}" \
+        -e WORKER_NAME="GitHub_Actions_Hermano" \
         bajio-scout
