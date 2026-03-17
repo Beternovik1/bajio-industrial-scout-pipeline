@@ -1,61 +1,44 @@
 import logging
 from sqlalchemy.orm import sessionmaker
-
 from database.models import db_connect, create_tables
 from etl.extract import extract_data
 from etl.transform import transform_data
 from etl.loaders import load_data
 
-# LOGGING
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s"
-)
-
+logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 logger = logging.getLogger(__name__)
 
-# PIPELINE
-def run_pipeline(include_linkedin=False, search_terms=["Data Engineer"], location="México"):
+def run_pipeline(search_config, results_limit, include_linkedin=False):
     engine = db_connect()
     create_tables(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-    # search_term = "Ingeniero Industrial"
-    # location = "Irapuato, Guanajuato"
+    
     try:
-        # EXTRACT
-        for search_term in search_terms:
-            logger.info(f"Iniciando extracción para: {search_term} en {location}")
+        # Desempaquetamos la configuración directamente del config.py
+        for search_term, location, industry_niche in search_config:
+            logger.info(f"==> Extrayendo: {search_term} en {location} (Nicho: {industry_niche})")
                     
             # EXTRACT
             raw_df = extract_data(
-                search_term,
-                location,
-                include_linkedin
-                )
+                search_term=search_term,
+                location=location,
+                results_limit=results_limit,
+                include_linkedin=include_linkedin
+            )
                     
-            # Si no hay datos, saltamos a la siguiente profesión en la lista
             if raw_df.empty:
-                logger.warning(f"No hay datos crudos para: {search_term}. Saltando a la siguiente...")
+                logger.warning(f"No hay datos para: {search_term}. Saltando...")
                 continue
 
             # TRANSFORM
-            records = transform_data(raw_df, search_term)
-
+            records = transform_data(raw_df, search_term, industry_niche)
             # LOAD
             load_data(session, records)
+            
     except Exception as error:
         logger.error(f"(PIPELINE) Falló: {error}")
         raise
     finally:
         session.close()
-        logger.info("Pipeline finalizado y conexion cerrada exitosamente !")
-
-
-# MAIN
-if __name__ == "__main__":
-    # run_pipeline()
-    run_pipeline(
-        search_terms=["Ingeniero de Datos", "Data Engineer"], 
-        location="Irapuato, Guanajuato"
-    )
+        logger.info("Conexión de base de datos cerrada.")
