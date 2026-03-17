@@ -27,5 +27,5 @@ jobs:
         -e EMAIL_USER="${EMAIL_USER}" \
         -e EMAIL_PASS="${EMAIL_PASS}" \
         -e DATABASE_URL="${DATABASE_URL}" \
-        -e WORKER_NAME="GitHub_Actions_Hermano" \
+        -e WORKER_NAME="GitHub_Actions" \
         bajio-scout

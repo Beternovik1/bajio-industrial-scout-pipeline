@@ -84,7 +84,7 @@ def extract_salary_from_text(description):
     return None, None
 
 # TRANSFORM
-def transform_data(df: pd.DataFrame, search_term: str):
+def transform_data(df: pd.DataFrame, search_term: str, industry_niche: str):
     logger.info(f"(TRANSFORM) Procesando {len(df)} registros")
     worker_name = os.getenv("WORKER_NAME", "default_worker")
     records = []
@@ -118,7 +118,7 @@ def transform_data(df: pd.DataFrame, search_term: str):
             # negocio
             "career": search_term,
             "scraped_by": worker_name,
-            "industry_niche": "Industrial",
+            "industry_niche": industry_niche,
             "is_premium": False,
 
             # modalidad
