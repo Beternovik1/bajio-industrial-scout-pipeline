@@ -23,11 +23,17 @@ def get_search_config():
     
     if WORKER_NAME == "GitHub_Actions":
         return [
-            ("Data Scientist", "México", "Inteligencia Artificial"),
-            ("Machine Learning Engineer", "México", "Inteligencia Artificial"),
-            ("AI Engineer", "México", "Inteligencia Artificial"),
-            ("MLOps Engineer", "México", "Inteligencia Artificial") 
-        ]
+            ("Cloud Engineer", "México", "Infraestructura Cloud"),
+            ("DevOps Engineer", "México", "Infraestructura Cloud"),
+            ("Site Reliability Engineer", "México", "Infraestructura Cloud"),
+            ("Arquitecto AWS", "México", "Infraestructura Cloud")
+        ]        
+        # return [
+        #     ("Data Scientist", "México", "Inteligencia Artificial"),
+        #     ("Machine Learning Engineer", "México", "Inteligencia Artificial"),
+        #     ("AI Engineer", "México", "Inteligencia Artificial"),
+        #     ("MLOps Engineer", "México", "Inteligencia Artificial") 
+        # ]
         
     elif WORKER_NAME == "Edgar":
         return [
