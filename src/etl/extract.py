@@ -1,5 +1,5 @@
 import logging
-from scraper.jobspy_scraper import scout_jobs
+from scrapers.jobspy_scraper import scout_jobs
 
 logger = logging.getLogger(__name__)
 
