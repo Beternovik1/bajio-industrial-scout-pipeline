@@ -4,6 +4,7 @@ __pycache__/
 venv/
 .env
 .venv/
+*.pyc
 
 # Data & Databases 
 *.db
@@ -18,3 +19,36 @@ reports/
 
 #  python -m venv venv
 # source venv/Scripts/activate
+
+######
+
+# Datos locales — NUNCA en git
+data/raw/
+data/processed/
+data/kaggle/
+*.csv
+*.parquet
+
+# Lambda layer — se construye en CI
+infrastructure/layers/*.zip
+
+# Terraform state local
+**/.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars         # Excepto los que NO tienen secretos
+
+# Entorno
+.env
+*.env.*
+!.env.example
+
+# NLP outputs
+src/nlp/outputs/*.png
+src/nlp/outputs/*.html
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+.opencode
+plots/
+AGENTS.md
