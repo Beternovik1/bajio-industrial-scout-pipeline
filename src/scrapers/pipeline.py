@@ -1,3 +1,4 @@
+#src/scrapers/pipeline.py
 import logging
 from sqlalchemy.orm import sessionmaker
 from database.models import db_connect, create_tables

@@ -1,3 +1,4 @@
+# src/etl/extract.py
 import logging
 from scrapers.jobspy_scraper import scout_jobs
 

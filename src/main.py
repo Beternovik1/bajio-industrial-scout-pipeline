@@ -1,3 +1,4 @@
+# src/main.py
 from scrapers.pipeline import run_pipeline
 from reporting_legacy.csv_export import export_jobs
 from shared.config import get_search_config, SCRAPER_CONFIG, include_linkedin_today

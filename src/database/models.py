@@ -24,6 +24,7 @@ class Job(Base):
     # Ubicación
     raw_location = Column(Text, nullable=False)
     country = Column(String(50), default='México')
+    country_code = Column(String(5))  # MX, CO, PE, CL, AR
     state = Column(String(50))
 
     # Negocio
@@ -55,7 +56,7 @@ class Job(Base):
 
     __table_args__ = (
         Index("idx_niche_date", "industry_niche", "date_scraped"),
-        Index("idx_geo_type", "country", "state", "job_type"),
+        Index("idx_geo_type", "country_code", "state", "job_type"),
         Index("idx_career_scope", "career", "job_type"),
         Index("idx_status", "status"),
     )
