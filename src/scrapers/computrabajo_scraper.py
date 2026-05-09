@@ -1,3 +1,4 @@
+# src/scrapers/computrabajo_scraper.py
 import logging
 import os
 import random
