@@ -52,3 +52,4 @@ src/nlp/outputs/*.html
 .opencode
 plots/
 AGENTS.md
+tests/test_scrapers/*.html

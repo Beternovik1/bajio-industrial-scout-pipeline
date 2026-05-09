@@ -1,10 +1,11 @@
+#src/shared/config.py
 import os
 from datetime import datetime
 
 WORKER_NAME = os.getenv("WORKER_NAME", "Local_Test")
 
 SCRAPER_CONFIG = {
-    "results_limit": 25,       
+    "results_limit": 5, #25       
     "hours_old": 72,           
 }
 
