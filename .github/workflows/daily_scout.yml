@@ -1,5 +1,5 @@
 name: Job Scout Diario (Docker)
-
+# .github/workflows/daily_scout.yml
 on:
   schedule:
     # It's going to start the scout everyday at 12:00 UTC (6:00AM CST in Irapuato)
@@ -28,4 +28,5 @@ jobs:
         -e EMAIL_PASS="${EMAIL_PASS}" \
         -e DATABASE_URL="${DATABASE_URL}" \
         -e WORKER_NAME="GitHub_Actions" \
+        -e EXECUTION_MODE="cloud_extraction" \
         bajio-scout

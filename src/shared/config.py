@@ -1,10 +1,14 @@
+#src/shared/config.py
+import logging
 import os
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 WORKER_NAME = os.getenv("WORKER_NAME", "Local_Test")
 
 SCRAPER_CONFIG = {
-    "results_limit": 25,       
+    "results_limit": 25, 
     "hours_old": 72,           
 }
 
@@ -23,11 +27,22 @@ def get_search_config():
     
     if WORKER_NAME == "GitHub_Actions":
         return [
+            ("Data Engineer", "México", "Ingeniería de Datos"),
+            ("Data Analyst", "México", "Ingeniería de Datos"),
+            ("Analytics Engineer", "México", "Ingeniería de Datos"),
             ("Cloud Engineer", "México", "Infraestructura Cloud"),
             ("DevOps Engineer", "México", "Infraestructura Cloud"),
-            ("Site Reliability Engineer", "México", "Infraestructura Cloud"),
-            ("Arquitecto AWS", "México", "Infraestructura Cloud")
-        ]        
+            ("Python Developer", "México", "Desarrollo de Software"),
+            ("React Developer", "México", "Desarrollo de Software"),
+            ("Cybersecurity Engineer", "México", "Ciberseguridad"),
+            ("Business Intelligence", "México", "Analítica de Datos"),
+        ]
+        # return [
+        #     ("Cloud Engineer", "México", "Infraestructura Cloud"),
+        #     ("DevOps Engineer", "México", "Infraestructura Cloud"),
+        #     ("Site Reliability Engineer", "México", "Infraestructura Cloud"),
+        #     ("Arquitecto AWS", "México", "Infraestructura Cloud")
+        # ]        
         # return [
         #     ("Data Scientist", "México", "Inteligencia Artificial"),
         #     ("Machine Learning Engineer", "México", "Inteligencia Artificial"),
@@ -77,4 +92,36 @@ def get_search_config():
         ]
         
     else:
-        raise ValueError(f"Error !! Trabajador '{WORKER_NAME}' no autorizado.")
+        logger.warning(f"Unknown WORKER_NAME '{WORKER_NAME}', defaulting to GitHub_Actions config")
+        return [
+            ("Data Engineer", "México", "Ingeniería de Datos"),
+            ("Cloud Engineer", "México", "Infraestructura Cloud"),
+        ]
+
+
+def get_keywords_from_config(search_config: list) -> list:
+    """Extract unique search terms for use with Computrabajo/OCC scrapers."""
+    return list(set(term for term, location, niche in search_config))
+
+
+NEW_SCRAPERS_CONFIG = {
+    "computrabajo": {
+        "max_results": int(os.getenv("COMPUTRABAJO_MAX_RESULTS", "100")),
+        "countries": os.getenv("COMPUTRABAJO_COUNTRIES", "MX").split(","),
+        "is_remote": os.getenv("COMPUTRABAJO_REMOTE", "false").lower() == "true",
+        "enabled": os.getenv("COMPUTRABAJO_ENABLED", "true").lower() == "true",
+    },
+    "occ": {
+        "max_results": int(os.getenv("OCC_MAX_RESULTS", "100")),
+        "is_remote": os.getenv("OCC_REMOTE", "false").lower() == "true",
+        "enabled": os.getenv("OCC_ENABLED", "true").lower() == "true",
+    },
+}
+
+ENRICHMENT_CONFIG = {
+    "daily_limit": int(os.getenv("DAILY_ENRICHMENT_LIMIT", "100")),
+    "batch_size": int(os.getenv("ENRICHMENT_BATCH_SIZE", "20")),
+    "cooldown_seconds": int(os.getenv("ENRICHMENT_COOLDOWN", "60")),
+    "circuit_breaker_threshold": 3,
+    "circuit_breaker_sleep": 300,
+}

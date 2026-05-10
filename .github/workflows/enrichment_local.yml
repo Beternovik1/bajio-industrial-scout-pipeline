@@ -1,0 +1,30 @@
+# WARNING: Phase 2 enrichment is designed for residential IPs.
+# Running from GitHub Actions datacenter IPs risks getting blocked.
+# RECOMMENDED: Run locally with EXECUTION_MODE=local_enrichment_only
+
+# .github/workflows/enrichment_local.yml
+name: Local Enrichment (Phase 2)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-docker-enrichment:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Downloading the code
+      uses: actions/checkout@v4
+
+    - name: Building docker image
+      run: docker build -t bajio-scout .
+
+    - name: Executing the container
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run: |
+        docker run --rm \
+        -e DATABASE_URL="${DATABASE_URL}" \
+        -e EXECUTION_MODE="local_enrichment_only" \
+        -e WORKER_NAME="GitHub_Actions" \
+        bajio-scout

@@ -4,6 +4,7 @@ beautifulsoup4==4.14.3
 certifi==2026.1.4
 charset-normalizer==3.4.4
 defusedxml==0.7.1
+fake-useragent==2.2.0
 fonttools==4.61.1
 fpdf2==2.8.6
 greenlet==3.3.1
@@ -29,3 +30,4 @@ typing-inspection==0.4.2
 typing_extensions==4.15.0
 tzdata==2025.3
 urllib3==2.6.3
+cloudscraper==1.2.71
