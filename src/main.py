@@ -1,38 +1,36 @@
 # src/main.py
-from scrapers.pipeline import run_pipeline
+import os
+from scrapers.pipeline import run_pipeline, run_cloud_extraction_pipeline, run_local_enrichment_pipeline
 from reporting_legacy.csv_export import export_jobs
 from shared.config import get_search_config, SCRAPER_CONFIG, include_linkedin_today
-from datetime import datetime
+
 
 def main():
-    print("Iniciando Bajio Industrial Scout...")
-    
+    mode = os.getenv("EXECUTION_MODE", "local_full")
     search_config = get_search_config()
     results_limit = SCRAPER_CONFIG["results_limit"]
-    include_linkedin = include_linkedin_today()
 
-    print("--- 1. Ejecutando ETL Pipeline ---")
-    run_pipeline(
-        search_config=search_config,
-        results_limit=results_limit,
-        include_linkedin=include_linkedin
-    )
-    print("Exporting jobs to csv...")
+    if mode == "cloud_extraction":
+        print("MODE: Cloud Extraction (Phase 1 via Datacenter)")
+        run_cloud_extraction_pipeline(search_config, results_limit)
+
+    elif mode == "local_enrichment_only":
+        print("MODE: Local Enrichment Only (Phase 2 via Residential IP)")
+        run_local_enrichment_pipeline()
+
+    elif mode == "local_full":
+        print("MODE: Local Full (JobSpy + Phase 2 Enrichment)")
+        include_linkedin = include_linkedin_today()
+        run_pipeline(search_config, results_limit, include_linkedin)
+        run_local_enrichment_pipeline()
+
+    else:
+        print(f"Unknown EXECUTION_MODE: {mode}")
+        return
+
     export_jobs()
+    print("Pipeline completed successfully!")
 
-    # print("Generating pdf file...")
-    # pdf_path = generate_pdf_report()
-
-    # print("Sending mail with pdf...")
-    # if pdf_path:
-    #     send_email(pdf_path)
-    #     print("Updating Database status...")
-    #     mark_jobs_as_notified()
-    # else:
-    #     print("Pdf could not be generated :(")
-    #     print("There's no any new jobs to send")
-    
-    print("Pipeline was successfully completed !")
 
 if __name__ == "__main__":
     main()
