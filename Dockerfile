@@ -1,5 +1,6 @@
+# Dockerfile
 # using an official and light version of python
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 # creating the app folder in the container
 WORKDIR /app

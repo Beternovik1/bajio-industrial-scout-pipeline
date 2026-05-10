@@ -14,7 +14,7 @@ from fake_useragent import UserAgent
 # Playwright could be used later as a fallback if blocking increases:
 # from playwright.sync_api import sync_playwright
 
-from base_scraper import BaseScraper
+from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 

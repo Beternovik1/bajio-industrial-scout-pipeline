@@ -28,4 +28,5 @@ jobs:
         -e EMAIL_PASS="${EMAIL_PASS}" \
         -e DATABASE_URL="${DATABASE_URL}" \
         -e WORKER_NAME="GitHub_Actions" \
+        -e EXECUTION_MODE="cloud_extraction" \
         bajio-scout

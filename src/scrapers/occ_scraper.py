@@ -9,7 +9,7 @@ import cloudscraper
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from base_scraper import BaseScraper
+from scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
