@@ -55,7 +55,7 @@ def get_search_config():
             ("Data Engineer", "México", "Ingeniería de Datos"),
             ("Data Analyst", "México", "Ingeniería de Datos"),
             ("Analytics Engineer", "México", "Ingeniería de Datos"),
-            ("Database Administrator", "México", "Ingeniería de Datos")
+            ("Backend Developer", "México", "Ingeniería de Datos")
         ]
         
     elif WORKER_NAME == "Fercho":

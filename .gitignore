@@ -53,3 +53,7 @@ src/nlp/outputs/*.html
 plots/
 AGENTS.md
 tests/test_scrapers/*.html
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+*.tfvars
