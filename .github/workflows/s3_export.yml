@@ -1,0 +1,31 @@
+name: Daily S3 Export (Supabase → Raw Zone)
+
+on:
+  schedule:
+    # 12:45 UTC = 6:45 AM CST, 28 min after daily_scout.yml finishes
+    - cron: '45 12 * * *'
+  workflow_dispatch:
+
+env:
+  S3_RAW_BUCKET: hirenovik-raw-dev
+  AWS_REGION: us-east-1
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Downloading the code
+        uses: actions/checkout@v4
+
+      - name: Setting up Python
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Running Supabase → S3 export
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: python src/data_ingestion/supabase_to_s3.py
